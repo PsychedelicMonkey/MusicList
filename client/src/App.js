@@ -14,13 +14,9 @@ function App() {
     <div className="App">
       <Router>
         <AppNavbar />
-        <Container>
-          <main>
-            <Route exact path="/" component={Results} />
-            <Route exact path="/albums/:id" component={Album} />
-            <Route exact path="/artists/:id" component={Artist} />
-          </main>
-        </Container>
+        <Route exact path="/" component={Results} />
+        <Route exact path="/albums/:id" component={Album} />
+        <Route exact path="/artists/:id" component={Artist} />
       </Router>
     </div>
   );

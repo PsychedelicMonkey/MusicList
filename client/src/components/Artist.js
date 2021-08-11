@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { Spinner } from 'reactstrap';
+import { Container, Spinner } from 'reactstrap';
 import axios from 'axios';
 import Releases from './Releases';
 
@@ -18,6 +18,8 @@ class Artist extends Component {
     super(props);
 
     this.state = {
+      isLoading: false,
+
       id: '',
       images: [{
         type: '',
@@ -39,48 +41,58 @@ class Artist extends Component {
   componentDidMount = async () => {
     const { id } = this.props.match.params;
 
+    this.setState({ isLoading: true });
+
     try {
       const res = await axios.get(`/api/artists/${id}`);
-      this.setState({ ...res.data });
+      this.setState({ ...res.data, isLoading: false });
     } catch (err) {
-      console.log(err);
+      this.setState({ isLoading: false });
     }
   }
 
   render() {
     const { id } = this.props.match.params;
-    const { images, name, profile, members, urls } = this.state;
+    const { images, name, profile, members, urls, isLoading } = this.state;
+
+    if (isLoading) {
+      return (<Spinner size="lg" className="spinner" />)
+    }
 
     return (
       <Fragment>
-        <div className="row">
-          <div className="col-md-6 m-auto">
-            <div className="profile">
-              <img src={images[0].uri} alt="" className="artist-img" />
-              <h2 className="text-center mt-4">{name}</h2>
+        <Container>
+          <main>
+            <div className="row">
+              <div className="col-md-6 m-auto">
+                <div className="profile">
+                  <img src={images[0].uri} alt="" className="artist-img" />
+                  <h2 className="text-center mt-4">{name}</h2>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <article>
-          <p className="text-center">{profile}</p>
-          <div className="links text-center">
-            <h4><a href={urls[0]}>Official Website</a></h4>
-            <div className="d-flex justify-content-center mt-4">
-              {formatUrls(urls)}
-            </div>
-          </div>
-          { members.length > 1 ? (
-            <Fragment>
-              <h4>Members</h4>
-              <ul>
-                { members.map(m => m.active ? (
-                  <li>{m.name}</li>
-                ) : null) }
-              </ul>
-            </Fragment>
-          ) : null }
-        </article>
-        <Releases id={id} />
+            <article>
+              <p className="text-center">{profile}</p>
+              <div className="links text-center">
+                <h4><a href={urls[0]}>Official Website</a></h4>
+                <div className="d-flex justify-content-center mt-4">
+                  {formatUrls(urls)}
+                </div>
+              </div>
+              { members.length > 1 ? (
+                <Fragment>
+                  <h4>Members</h4>
+                  <ul>
+                    { members.map(m => m.active ? (
+                      <li>{m.name}</li>
+                    ) : null) }
+                  </ul>
+                </Fragment>
+              ) : null }
+            </article>
+            <Releases id={id} />
+          </main>
+        </Container>
       </Fragment>
     );
   }
