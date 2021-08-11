@@ -8,11 +8,6 @@ import {
   Nav,
   NavItem,
   NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  NavbarText
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
@@ -45,27 +40,9 @@ class AppNavbar extends Component {
             <Nav className="mr-auto" navbar>
               <Search />
               <NavItem>
-                <NavLink href="https://github.com/reactstrap/reactstrap">GitHub</NavLink>
+                <NavLink href="https://github.com/PsychedelicMonkey/MusicList">GitHub</NavLink>
               </NavItem>
-              <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle nav caret>
-                  Options
-                </DropdownToggle>
-                <DropdownMenu right>
-                  <DropdownItem>
-                    Option 1
-                  </DropdownItem>
-                  <DropdownItem>
-                    Option 2
-                  </DropdownItem>
-                  <DropdownItem divider />
-                  <DropdownItem>
-                    Reset
-                  </DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
             </Nav>
-            <NavbarText>Simple Text</NavbarText>
           </Collapse>
         </Container>
       </Navbar>
