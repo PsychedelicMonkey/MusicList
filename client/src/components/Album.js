@@ -1,58 +1,20 @@
 import React, { Component, Fragment } from 'react'
 import { Link } from 'react-router-dom';
 import { Spinner, Table } from 'reactstrap';
-import axios from 'axios';
+import { connect } from 'react-redux';
+import { loadAlbum } from '../actions/albumActions';
 
 const videoUri = video => { return video.split('=')[1]; }
 
-export default class Album extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      isLoading: false,
-
-      artistID: '',
-      artists: [{
-        name: '',
-        id: '',
-      }],
-      genres: [],
-      images: [{
-        uri: '',
-        width: '',
-        height: '',
-      }],
-      styles: [],
-      tracklist: [{
-        position: '',
-        title: '',
-        duration: '',
-        type_: '',
-      }],
-      videos: [{
-        uri: '',
-        description: '',
-        duration: '',
-        title: '',
-      }]
-    };
-  }
-
-  componentDidMount = async () => {
+class Album extends Component {
+  componentDidMount() {
     const { id } = this.props.match.params;
-    this.setState({ isLoading: true });
-
-    try {
-      const res = await axios.get(`/api/albums/master/${id}`);
-      this.setState({ ...res.data, ...res.data.artists, artistID: res.data.artists[0].id, isLoading: false });
-    } catch (err) {
-      this.setState({ isLoading: false });
-    }
+    
+    this.props.loadAlbum(id);
   }
 
   render() {
-    const { artists, genres, images, styles, title, tracklist, videos, year, isLoading } = this.state;
+    const { artists, genres, images, styles, title, tracklist, videos, year, isLoading } = this.props.album;
 
     if (isLoading) {
       return (<Spinner size="lg" className="spinner" />)
@@ -112,3 +74,9 @@ export default class Album extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  album: state.album,
+});
+
+export default connect(mapStateToProps, { loadAlbum })(Album);

@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react'
+import { Spinner } from 'reactstrap';
 import axios from 'axios';
 import Releases from './Releases';
 
@@ -51,7 +52,7 @@ class Artist extends Component {
     const { images, name, profile, members, urls } = this.state;
 
     return (
-      <main>
+      <Fragment>
         <div className="row">
           <div className="col-md-6 m-auto">
             <div className="profile">
@@ -80,7 +81,7 @@ class Artist extends Component {
           ) : null }
         </article>
         <Releases id={id} />
-      </main>
+      </Fragment>
     );
   }
 }
