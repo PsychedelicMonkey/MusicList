@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from 'react'
 import { Container, Spinner } from 'reactstrap';
-import axios from 'axios';
+import { connect } from 'react-redux';
+import { loadArtist } from '../actions/artistActions';
+
 import Releases from './Releases';
 
 const formatUrls = urls => urls.map(u => (
@@ -14,46 +16,17 @@ const formatUrls = urls => urls.map(u => (
 ))
 
 class Artist extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      isLoading: false,
-
-      id: '',
-      images: [{
-        type: '',
-        height: '',
-        width: '',
-        uri: '',
-      }],
-      members: [{
-        active: '',
-        id: '',
-        name: '',
-      }],
-      name: '',
-      profile: '',
-      urls: [],
-    };
-  }
-
   componentDidMount = async () => {
     const { id } = this.props.match.params;
 
     this.setState({ isLoading: true });
 
-    try {
-      const res = await axios.get(`/api/artists/${id}`);
-      this.setState({ ...res.data, isLoading: false });
-    } catch (err) {
-      this.setState({ isLoading: false });
-    }
+    this.props.loadArtist(id);
   }
 
   render() {
     const { id } = this.props.match.params;
-    const { images, name, profile, members, urls, isLoading } = this.state;
+    const { images, name, profile, members, urls, isLoading } = this.props.artist;
 
     if (isLoading) {
       return (<Spinner size="lg" className="spinner" />)
@@ -98,4 +71,8 @@ class Artist extends Component {
   }
 }
 
-export default Artist;
+const mapStateToProps = state => ({
+  artist: state.artist,
+});
+
+export default connect(mapStateToProps, { loadArtist })(Artist);
