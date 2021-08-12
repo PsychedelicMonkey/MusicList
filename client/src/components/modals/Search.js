@@ -11,6 +11,7 @@ import {
   ModalHeader,
   NavItem,
   NavLink,
+  Spinner,
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import { searchAlbums } from '../../actions/searchActions';
@@ -21,6 +22,7 @@ class Search extends Component {
 
     this.state = {
       isOpen: false,
+      disabled: false,
 
       query: '',
     };
@@ -28,6 +30,28 @@ class Search extends Component {
     this.toggle = this.toggle.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  componentDidUpdate(prevProps) {
+    const { isLoading, results } = this.props.search;
+
+    if (prevProps !== this.props) {
+      // Disable submit button while results are loading
+      if (prevProps.isLoading !== isLoading) {
+        if (isLoading) {
+          this.setState({ disabled: true });
+        } else {
+          this.setState({ disabled: false });
+        }
+      }
+
+      // Close modal once results are loaded
+      if (prevProps.results !== results) {
+        if (results) {
+          this.setState({ isOpen: false });
+        }
+      }
+    }
   }
 
   toggle = () => {
@@ -51,7 +75,8 @@ class Search extends Component {
   }
   
   render() {
-    const { isOpen } = this.state;
+    const { disabled, isOpen } = this.state;
+    const { isLoading } = this.props.search;
 
     return (
       <Fragment>
@@ -75,7 +100,10 @@ class Search extends Component {
               </FormGroup>
             </ModalBody>
             <ModalFooter>
-              <Button type="submit" color="primary">Search</Button>
+              <Button type="submit" color="primary" disabled={disabled}>
+                { isLoading ? <Spinner className="mr-2" size="sm" /> : null }
+                Search
+              </Button>
               <Button onClick={this.toggle}>Cancel</Button>
             </ModalFooter>
           </Form>
@@ -85,4 +113,8 @@ class Search extends Component {
   }
 }
 
-export default connect(null, { searchAlbums })(Search);
+const mapStateToProps = state => ({
+  search: state.search,
+});
+
+export default connect(mapStateToProps, { searchAlbums })(Search);

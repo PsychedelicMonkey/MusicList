@@ -40,7 +40,13 @@ class Results extends Component {
               </Table>
             </main>
           </Container>
-        : isLoading ? <Spinner color="primary" className="spinner" /> : null }
+        : isLoading ? <Spinner color="primary" className="spinner" /> 
+        : <Container>
+          <main>
+            <h2 className="text-center my-3">Welcome to MusicList</h2>
+            <p className="text-center">To get started, click the "Search" button in the navbar and search for any of your favorite albums.</p>
+          </main>
+        </Container> }
       </Fragment>
     );
   }
