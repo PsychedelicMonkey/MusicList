@@ -10,6 +10,12 @@ body {
   box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.1), 2px 3px 5px rgba(0, 0, 0, 0.1);
 }
 
+@media (max-width: 500px) {
+  .container:nth-child(2) {
+    max-width: 90vw;
+  }
+}
+
 main {
   padding: 12px 14px;
 }
@@ -80,8 +86,16 @@ main {
   }
 }
 
+@media (max-width: 500px) {
+  .album-img {
+    width: 220px;
+    height: 220px;
+  }
+}
+
 .artist-img {
   width: auto;
+  margin-top: 10px;
   max-width: 100%;
   box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.1), 2px 3px 5px rgba(0, 0, 0, 0.1);
 }
@@ -89,6 +103,7 @@ main {
 .release-img {
   width: 120px;
   height: 120px;
+  box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.1), 2px 3px 5px rgba(0, 0, 0, 0.1);
 }
 
 @media (max-width: 800px) {
@@ -96,6 +111,19 @@ main {
     width: 80px;
     height: 80px;
   }  
+}
+
+@media (max-width: 500px) {
+  .release-img {
+    width: 64px;
+    height: 64px;
+  }  
+}
+
+@media (max-width: 800px) {
+  .release-title {
+    font-size: 14pt;
+  }
 }
 
 .yt-embed {

@@ -40,7 +40,7 @@ class Releases extends Component {
               <tr>
                 <td className="align-middle"><img src={r.thumb} className="release-img" /></td>
                 <td className="align-middle">
-                  <h4>
+                  <h4 className="release-title">
                     <Link to={`/albums/${r.id}`}>{r.title}</Link>
                   </h4>
                 </td>
