@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import {
+  Alert,
   Button,
   Form,
   FormGroup,
@@ -11,8 +12,10 @@ import {
   ModalHeader,
   NavItem,
   NavLink,
+  Spinner,
 } from 'reactstrap';
 import { connect } from 'react-redux';
+import { clearErrors } from '../../actions/errorActions';
 import { searchAlbums } from '../../actions/searchActions';
 
 class Search extends Component {
@@ -21,6 +24,8 @@ class Search extends Component {
 
     this.state = {
       isOpen: false,
+      disabled: false,
+      msg: null,
 
       query: '',
     };
@@ -28,6 +33,40 @@ class Search extends Component {
     this.toggle = this.toggle.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+
+    this.closeError = this.closeError.bind(this);
+  }
+
+  componentDidUpdate(prevProps) {
+    const { error } = this.props;
+    const { isLoading, results } = this.props.search;
+
+    if (prevProps !== this.props) {
+      // Disable submit button while results are loading
+      if (prevProps.isLoading !== isLoading) {
+        if (isLoading) {
+          this.setState({ disabled: true });
+        } else {
+          this.setState({ disabled: false });
+        }
+      }
+
+      // Display error message
+      if (prevProps.error !== error) {
+        if (error.id === 'SEARCH_ALBUMS_ERROR') {
+          this.setState({ msg: error.msg });
+        } else {
+          this.setState({ msg: null });
+        }
+      }
+
+      // Close modal once results are loaded
+      if (prevProps.results !== results) {
+        if (results) {
+          this.setState({ isOpen: false });
+        }
+      }
+    }
   }
 
   toggle = () => {
@@ -50,8 +89,13 @@ class Search extends Component {
     this.props.searchAlbums(JSON.stringify({ query }));
   }
   
+  closeError = () => {
+    this.props.clearErrors();
+  }
+  
   render() {
-    const { isOpen } = this.state;
+    const { disabled, msg,  isOpen } = this.state;
+    const { isLoading } = this.props.search;
 
     return (
       <Fragment>
@@ -62,6 +106,7 @@ class Search extends Component {
           <ModalHeader toggle={this.toggle}>Search</ModalHeader>
           <Form onSubmit={this.onSubmit}>
             <ModalBody>
+              { msg ? <Alert color="danger" toggle={this.closeError}>{msg}</Alert> : null }
               <FormGroup>
                 <Label for="query">Search</Label>
                 <Input
@@ -75,7 +120,10 @@ class Search extends Component {
               </FormGroup>
             </ModalBody>
             <ModalFooter>
-              <Button type="submit" color="primary">Search</Button>
+              <Button type="submit" color="primary" disabled={disabled}>
+                { isLoading ? <Spinner className="mr-2" size="sm" /> : null }
+                Search
+              </Button>
               <Button onClick={this.toggle}>Cancel</Button>
             </ModalFooter>
           </Form>
@@ -85,4 +133,9 @@ class Search extends Component {
   }
 }
 
-export default connect(null, { searchAlbums })(Search);
+const mapStateToProps = state => ({
+  error: state.error,
+  search: state.search,
+});
+
+export default connect(mapStateToProps, { clearErrors, searchAlbums })(Search);

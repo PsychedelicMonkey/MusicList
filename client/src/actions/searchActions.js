@@ -3,6 +3,7 @@ import {
   SEARCH_ALBUMS_SUCCESS,
   SEARCH_LOADING,
 } from './types';
+import { getError } from './errorActions';
 import axios from 'axios';
 
 export const searchAlbums = query => async dispatch => {
@@ -19,6 +20,7 @@ export const searchAlbums = query => async dispatch => {
       payload: res.data,
     });
   } catch (err) {
+    dispatch(getError(err.response.data.msg, err.response.status, 'SEARCH_ALBUMS_ERROR'));
     dispatch({
       type: SEARCH_ALBUMS_ERROR,
     });
