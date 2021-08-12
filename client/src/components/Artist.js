@@ -12,6 +12,7 @@ const formatUrls = urls => urls.map(u => (
     { u.includes('instagram') ? <a className="sm-link" href={u}><i className="fab fa-instagram"></i></a> : null }
     { u.includes('soundcloud') ? <a className="sm-link" href={u}><i className="fab fa-soundcloud"></i></a> : null }
     { u.includes('youtube') ? <a className="sm-link" href={u}><i className="fab fa-youtube"></i></a> : null }
+    { u.includes('bandcamp') ? <a className="sm-link" href={u}><i className="fab fa-bandcamp"></i></a> : null }
   </div>
 ))
 
