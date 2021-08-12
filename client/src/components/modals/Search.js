@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import {
+  Alert,
   Button,
   Form,
   FormGroup,
@@ -14,6 +15,7 @@ import {
   Spinner,
 } from 'reactstrap';
 import { connect } from 'react-redux';
+import { clearErrors } from '../../actions/errorActions';
 import { searchAlbums } from '../../actions/searchActions';
 
 class Search extends Component {
@@ -23,6 +25,7 @@ class Search extends Component {
     this.state = {
       isOpen: false,
       disabled: false,
+      msg: null,
 
       query: '',
     };
@@ -30,9 +33,12 @@ class Search extends Component {
     this.toggle = this.toggle.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+
+    this.closeError = this.closeError.bind(this);
   }
 
   componentDidUpdate(prevProps) {
+    const { error } = this.props;
     const { isLoading, results } = this.props.search;
 
     if (prevProps !== this.props) {
@@ -42,6 +48,15 @@ class Search extends Component {
           this.setState({ disabled: true });
         } else {
           this.setState({ disabled: false });
+        }
+      }
+
+      // Display error message
+      if (prevProps.error !== error) {
+        if (error.id === 'SEARCH_ALBUMS_ERROR') {
+          this.setState({ msg: error.msg });
+        } else {
+          this.setState({ msg: null });
         }
       }
 
@@ -74,8 +89,12 @@ class Search extends Component {
     this.props.searchAlbums(JSON.stringify({ query }));
   }
   
+  closeError = () => {
+    this.props.clearErrors();
+  }
+  
   render() {
-    const { disabled, isOpen } = this.state;
+    const { disabled, msg,  isOpen } = this.state;
     const { isLoading } = this.props.search;
 
     return (
@@ -87,6 +106,7 @@ class Search extends Component {
           <ModalHeader toggle={this.toggle}>Search</ModalHeader>
           <Form onSubmit={this.onSubmit}>
             <ModalBody>
+              { msg ? <Alert color="danger" toggle={this.closeError}>{msg}</Alert> : null }
               <FormGroup>
                 <Label for="query">Search</Label>
                 <Input
@@ -114,7 +134,8 @@ class Search extends Component {
 }
 
 const mapStateToProps = state => ({
+  error: state.error,
   search: state.search,
 });
 
-export default connect(mapStateToProps, { searchAlbums })(Search);
+export default connect(mapStateToProps, { clearErrors, searchAlbums })(Search);
