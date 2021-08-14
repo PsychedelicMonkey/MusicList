@@ -40,7 +40,7 @@ class Results extends Component {
               </Table>
             </main>
           </Container>
-        : isLoading ? <Spinner color="primary" className="spinner" /> 
+        : isLoading ? <Spinner className="spinner" /> 
         : <Container>
           <main>
             <h2 className="text-center my-3">Welcome to MusicList</h2>

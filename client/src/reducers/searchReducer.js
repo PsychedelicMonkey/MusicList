@@ -14,7 +14,6 @@ export default function(state = initialState, action) {
   switch (action.type) {
     case SEARCH_LOADING:
       return {
-        ...state,
         isLoading: true,
       }
     case SEARCH_ALBUMS_SUCCESS:

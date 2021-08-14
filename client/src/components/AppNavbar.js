@@ -11,7 +11,7 @@ import {
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
-import Search from './modals/Search';
+import SearchForm from './SearchForm';
 
 class AppNavbar extends Component {
   constructor(props) {
@@ -38,10 +38,10 @@ class AppNavbar extends Component {
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={isOpen} navbar>
             <Nav className="mr-auto" navbar>
-              <Search />
               <NavItem>
                 <NavLink href="https://github.com/PsychedelicMonkey/MusicList">GitHub</NavLink>
               </NavItem>
+              <SearchForm />
             </Nav>
           </Collapse>
         </Container>
