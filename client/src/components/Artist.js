@@ -55,12 +55,24 @@ class Artist extends Component {
               </div>
               { members.length > 1 ? (
                 <Fragment>
-                  <h4>Members</h4>
-                  <ul>
-                    { members.map(m => m.active ? (
-                      <li>{m.name}</li>
-                    ) : null) }
-                  </ul>
+                  <div className="members-list">
+                    <h4>Members</h4>
+                    <ul className="list-inline">
+                      { members.map(m => m.active ? (
+                        <li className="list-inline-item">{m.name}</li>
+                      ) : null) }
+                    </ul>
+                  </div>
+                  { members.find(m => m.active === false) ? (
+                    <div className="members-list">
+                      <h4>Previous Members</h4>
+                      <ul className="list-inline">
+                        { members.map(m => !m.active ? (
+                          <li className="list-inline-item">{m.name}</li>
+                        ) : null) }
+                      </ul>
+                    </div>
+                  ) : null }
                 </Fragment>
               ) : null }
             </article>

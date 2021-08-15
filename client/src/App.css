@@ -42,7 +42,8 @@ main {
 }
 
 .links,
-.releases {
+.releases,
+.members-list {
   border-top: 1px solid #ccc;
   padding-top: 22px;
 }
@@ -142,4 +143,8 @@ main {
   z-index: 1031;
   top: 50%;
   right: 50%;
+}
+
+.members-list {
+  text-align: center;
 }
