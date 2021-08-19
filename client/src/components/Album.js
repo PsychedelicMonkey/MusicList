@@ -62,16 +62,14 @@ class Album extends Component {
                 <hr></hr>
               </div>
             </div>
-            <div className="row">
-              <div className="col-sm-12">
-                <h3 className="mb-3">Videos</h3>
+            <div className="row d-flex justify-content-center flex-column align-items-center">
+                <h3 className="mb-3 ml-4">Videos</h3>
                 { videos.map(v => (
-                  <div className="col-sm-12 col-lg-6">
+                  <div className="col-sm-12 col-lg-8">
                     <iframe className="yt-embed" src={`https://www.youtube.com/embed/${videoUri(v.uri)}`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                   </div>
                 )) }
               </div>
-            </div>
           </main>
         </Container>
       </Fragment>

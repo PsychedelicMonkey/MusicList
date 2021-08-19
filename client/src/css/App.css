@@ -1,3 +1,7 @@
+:root {
+  --shadow: 2px 3px 5px rgba(0, 0, 0, 0.1), 2px 3px 5px rgba(0, 0, 0, 0.1);
+}
+
 body {
   padding-top: 70px;
   background-color: #eee;
@@ -7,7 +11,7 @@ body {
   padding: 0 !important;
   margin-bottom: 44px;
   background-color: #fff;
-  box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.1), 2px 3px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow);
 }
 
 @media (max-width: 500px) {
@@ -80,7 +84,7 @@ main {
   object-fit: cover;
   width: auto;
   max-width: 100%;
-  box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.1), 2px 3px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow);
 }
 
 @media (max-width: 800px) {
@@ -102,13 +106,13 @@ main {
   width: auto;
   margin-top: 10px;
   max-width: 100%;
-  box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.1), 2px 3px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow);
 }
 
 .release-img {
   width: 120px;
   height: 120px;
-  box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.1), 2px 3px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow);
 }
 
 @media (max-width: 800px) {

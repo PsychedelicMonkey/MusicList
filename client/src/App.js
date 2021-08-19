@@ -1,7 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
+import './css/App.css';
 
-import { Container } from 'reactstrap';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import AppNavbar from './components/AppNavbar';
