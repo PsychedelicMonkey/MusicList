@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
-import { Table } from 'reactstrap';
+import { Spinner, Table } from 'reactstrap';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 
 class ArtistResults extends Component {
   render() {
-    const { results } = this.props;
+    const { results, isLoading } = this.props.search;
     return (
       <Table>
         <tbody>
@@ -16,7 +15,7 @@ class ArtistResults extends Component {
                 <td className="align-middle"><a href={`/artists/${r.id}`}>{r.title}</a></td>
               </tr>
             )) 
-          : null }
+          : isLoading ? <Spinner /> : null }
         </tbody>
       </Table>
     );
@@ -24,7 +23,7 @@ class ArtistResults extends Component {
 }
 
 const mapStateToProps = state => ({
-  results: state.searchArtists.results,
+  search: state.searchArtists,
 });
 
 export default connect(mapStateToProps)(ArtistResults);

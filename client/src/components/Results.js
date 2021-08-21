@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { Container } from 'reactstrap'
+import { Container, Spinner } from 'reactstrap'
 import { connect } from 'react-redux';
 
 import AlbumsResults from './AlbumsResults'
@@ -7,7 +7,12 @@ import ArtistResults from './ArtistResults';
 
 class Results extends Component {
   render() {
-    const { results } = this.props.search;
+    const { results } = this.props.search; 
+
+    if (this.props.search.isLoading || this.props.artistSearch.isLoading) {
+      return (<Spinner className="spinner" />);
+    }
+
     return (
       <Container>
         <main>
@@ -37,6 +42,7 @@ class Results extends Component {
 
 const mapStateToProps = state => ({
   search: state.search,
+  artistSearch: state.searchArtists,
 });
 
 export default connect(mapStateToProps)(Results);
