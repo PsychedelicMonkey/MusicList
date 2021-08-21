@@ -7,12 +7,12 @@ import Releases from './Releases';
 
 const formatUrls = urls => urls.map(u => (
   <div className="sm-links">
-    { u.includes('facebook') ? <a className="sm-link" href={u}><i className="fab fa-facebook-f"></i></a> : null }
-    { u.includes('twitter') ? <a className="sm-link" href={u}><i className="fab fa-twitter"></i></a> : null }
-    { u.includes('instagram') ? <a className="sm-link" href={u}><i className="fab fa-instagram"></i></a> : null }
-    { u.includes('soundcloud') ? <a className="sm-link" href={u}><i className="fab fa-soundcloud"></i></a> : null }
-    { u.includes('youtube') ? <a className="sm-link" href={u}><i className="fab fa-youtube"></i></a> : null }
-    { u.includes('bandcamp') ? <a className="sm-link" href={u}><i className="fab fa-bandcamp"></i></a> : null }
+    { u.includes('facebook') ? <a className="sm-link" href={u} target="_blank"><i className="fab fa-facebook-f"></i></a> : null }
+    { u.includes('twitter') ? <a className="sm-link" href={u} target="_blank"><i className="fab fa-twitter"></i></a> : null }
+    { u.includes('instagram') ? <a className="sm-link" href={u} target="_blank"><i className="fab fa-instagram"></i></a> : null }
+    { u.includes('soundcloud') ? <a className="sm-link" href={u} target="_blank"><i className="fab fa-soundcloud"></i></a> : null }
+    { u.includes('youtube') ? <a className="sm-link" href={u} target="_blank"><i className="fab fa-youtube"></i></a> : null }
+    { u.includes('bandcamp') ? <a className="sm-link" href={u} target="_blank"><i className="fab fa-bandcamp"></i></a> : null }
   </div>
 ))
 
@@ -48,7 +48,7 @@ class Artist extends Component {
             <article>
               <p className="text-center">{profile}</p>
               <div className="links text-center">
-                <h4><a href={urls[0]}>Official Website</a></h4>
+                <h4><a href={urls[0]} target="_blank">Official Website</a></h4>
                 <div className="d-flex justify-content-center mt-4">
                   {formatUrls(urls)}
                 </div>

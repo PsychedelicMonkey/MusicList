@@ -5,7 +5,7 @@ import {
   Input,
 } from 'reactstrap';
 import { connect } from 'react-redux';
-import { searchAlbums } from '../actions/searchActions';
+import { searchAlbums, searchArtists } from '../actions/searchActions';
 
 class SearchForm extends Component {
   constructor(props) {
@@ -32,6 +32,7 @@ class SearchForm extends Component {
 
     const { query } = this.state;
     this.props.searchAlbums(JSON.stringify({ query }));
+    this.props.searchArtists(JSON.stringify({ query }));
 
     this.setState({ query: '' });
   }
@@ -56,4 +57,4 @@ class SearchForm extends Component {
   }
 }
 
-export default connect(null, { searchAlbums })(SearchForm);
+export default connect(null, { searchAlbums, searchArtists })(SearchForm);
