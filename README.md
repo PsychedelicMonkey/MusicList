@@ -17,3 +17,5 @@ Run the app in **development** mode with `npm run dev`
 - DISCOGS_NAME={discogs_application_name}
 - DISCOGS_KEY={discogs_api_key}
 - DISCOGS_SECRET={discogs_api_secret}
+- REDIS_HOST (Default: localhost)
+- REDIS_PORT (Default: 6379)
