@@ -1,10 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const discogs = require('../../config/discogs');
+const redis = require('../../config/redis');
+const { cache } = require('../../middleware/redis');
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', cache, async (req, res) => {
+  const { id } = req.params;
+
   try {
-    const artist = await discogs.getArtist(req.params.id);
+    const artist = await discogs.getArtist(id);
+
+    redis.setex(id, 3600, JSON.stringify(artist));
+
     res.json(artist);
   } catch (err) {
     res.status(500).json({ msg: 'Server error' });
