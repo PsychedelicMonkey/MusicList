@@ -1,10 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const discogs = require('../../config/discogs');
+const redis = require('../../config/redis');
+const { cache } = require('../../middleware/redis');
 
-router.get('/master/:id', async (req, res) => {
+router.get('/master/:id', cache, async (req, res) => {
+  const { id } = req.params;
+
   try {
-    const master = await discogs.getMaster(req.params.id);
+    const master = await discogs.getMaster(id);
+
+    redis.setex(id, 3600, JSON.stringify(master));
+
     res.json(master);
   } catch (err) {
     res.status(500).json({ msg: 'Server error' });
