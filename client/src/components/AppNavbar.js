@@ -39,9 +39,14 @@ class AppNavbar extends Component {
           <Collapse isOpen={isOpen} navbar>
             <Nav className="mr-auto" navbar>
               <NavItem>
-                <NavLink href="https://github.com/PsychedelicMonkey/MusicList">GitHub</NavLink>
+                <NavLink href="https://github.com/PsychedelicMonkey/MusicList" target="_blank">GitHub</NavLink>
               </NavItem>
               <SearchForm />
+            </Nav>
+            <Nav className="ml-auto" navbar>
+              <NavItem>
+                <NavLink tag={Link} to="/auth/login">Log In</NavLink>
+              </NavItem>
             </Nav>
           </Collapse>
         </Container>
