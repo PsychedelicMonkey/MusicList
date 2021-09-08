@@ -10,7 +10,9 @@ import {
   NavLink,
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
+import Logout from './auth/Logout';
 import SearchForm from './SearchForm';
 
 class AppNavbar extends Component {
@@ -30,6 +32,7 @@ class AppNavbar extends Component {
 
   render() {
     const { isOpen } = this.state;
+    const { isAuthenticated } = this.props;
 
     return (
       <Navbar color="light" light expand="md" fixed="top">
@@ -44,9 +47,13 @@ class AppNavbar extends Component {
               <SearchForm />
             </Nav>
             <Nav className="ml-auto" navbar>
-              <NavItem>
-                <NavLink tag={Link} to="/auth/login">Log In</NavLink>
-              </NavItem>
+              {isAuthenticated ? (
+                <Logout />
+              ): (
+                <NavItem>
+                  <NavLink tag={Link} to="/auth/login">Log In</NavLink>
+                </NavItem>
+              ) }
             </Nav>
           </Collapse>
         </Container>
@@ -55,4 +62,8 @@ class AppNavbar extends Component {
   }
 }
 
-export default AppNavbar;
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps)(AppNavbar);

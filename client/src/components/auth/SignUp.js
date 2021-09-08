@@ -6,7 +6,11 @@ import {
   FormGroup,
   Input,
   Label,
+  Spinner,
 } from 'reactstrap';
+import { Redirect } from 'react-router';
+import { connect } from 'react-redux';
+import { registerUser } from '../../actions/authActions';
 
 class SignUp extends Component {
   constructor(props) {
@@ -33,10 +37,21 @@ class SignUp extends Component {
   onSubmit = e => {
     e.preventDefault();
 
-    alert(JSON.stringify(this.state));
+    const { firstName, lastName, email, password, password2 } = this.state;
+    this.props.registerUser(firstName, lastName, email, password, password2);
   }
 
   render() {
+    const { isAuthenticated, isLoading } = this.props.auth;
+
+    if (isLoading) {
+      return <Spinner className="spinner" />;
+    }
+
+    if (isAuthenticated) {
+      return <Redirect to="/" />
+    }
+
     return (
       <Container>
         <main>
@@ -113,4 +128,8 @@ class SignUp extends Component {
   }
 }
 
-export default SignUp;
+const mapStateToProps = state => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, { registerUser })(SignUp);
