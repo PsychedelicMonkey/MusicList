@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import {
-  NavItem,
-  NavLink,
+  DropdownItem,
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import { logoutUser } from '../../actions/authActions';
@@ -14,9 +13,7 @@ class Logout extends Component {
   render() {
     return (
       <Fragment>
-        <NavItem>
-          <NavLink onClick={this.logout.bind(this)} href="#">Log Out</NavLink>
-        </NavItem>
+        <DropdownItem onClick={this.logout.bind(this)}>Log Out</DropdownItem>
       </Fragment>
     );
   }

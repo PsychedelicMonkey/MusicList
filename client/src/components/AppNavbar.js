@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import {
   Container,
   Collapse,
@@ -8,6 +8,10 @@ import {
   Nav,
   NavItem,
   NavLink,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -32,7 +36,7 @@ class AppNavbar extends Component {
 
   render() {
     const { isOpen } = this.state;
-    const { isAuthenticated } = this.props;
+    const { isAuthenticated, user } = this.props;
 
     return (
       <Navbar color="light" light expand="md" fixed="top">
@@ -48,7 +52,16 @@ class AppNavbar extends Component {
             </Nav>
             <Nav className="ml-auto" navbar>
               {isAuthenticated ? (
-                <Logout />
+                <UncontrolledDropdown nav inNavbar>
+                  <DropdownToggle nav caret>{user.firstName} {user.lastName}</DropdownToggle>
+                  <DropdownMenu right>
+                    <DropdownItem>My Albums</DropdownItem>
+                    <DropdownItem>My Artists</DropdownItem>
+                    <DropdownItem>My Profile</DropdownItem>
+                    <DropdownItem divider />
+                    <Logout />
+                  </DropdownMenu>
+                </UncontrolledDropdown>
               ): (
                 <NavItem>
                   <NavLink tag={Link} to="/auth/login">Log In</NavLink>
@@ -64,6 +77,7 @@ class AppNavbar extends Component {
 
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
+  user: state.auth.user,
 });
 
 export default connect(mapStateToProps)(AppNavbar);
