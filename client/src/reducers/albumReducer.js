@@ -1,36 +1,14 @@
 import { ALBUM_ERROR, ALBUM_LOADED, ALBUM_LOADING, } from '../actions/types';
 
 const initialState = {
+  album: null,
   isLoading: false,
-
-  artistID: '',
-  artists: [{
-    name: '',
-    id: '',
-  }],
-  genres: [],
-  images: [{
-    uri: '',
-    width: '',
-    height: '',
-  }],
-  styles: [],
-  tracklist: [{
-    position: '',
-    title: '',
-    duration: '',
-    type_: '',
-  }],
-  videos: [{
-    uri: '',
-    description: '',
-    duration: '',
-    title: '',
-  }]
 };
 
 export default function(state = initialState, action) {
-  switch (action.type) {
+  const { type, payload } = action;
+
+  switch (type) {
     case ALBUM_LOADING:
       return {
         ...state,
@@ -39,9 +17,7 @@ export default function(state = initialState, action) {
     case ALBUM_LOADED:
       return {
         ...state,
-        ...action.payload,
-        ...action.payload.artists,
-        artistID: action.payload.artists[0].id,
+        album: payload,
         isLoading: false,
       }
     case ALBUM_ERROR:

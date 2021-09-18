@@ -1,27 +1,14 @@
 import { ARTIST_ERROR, ARTIST_LOADED, ARTIST_LOADING } from '../actions/types';
 
 const initialState = {
+  artist: null,
   isLoading: false,
-
-  id: '',
-  images: [{
-    type: '',
-    height: '',
-    width: '',
-    uri: '',
-  }],
-  members: [{
-    active: '',
-    id: '',
-    name: '',
-  }],
-  name: '',
-  profile: '',
-  urls: [],
 }
 
 export default function(state = initialState, action) {
-  switch (action.type) {
+  const { type, payload } = action;
+
+  switch (type) {
     case ARTIST_LOADING:
       return {
         ...state,
@@ -30,7 +17,7 @@ export default function(state = initialState, action) {
     case ARTIST_LOADED:
       return {
         ...state,
-        ...action.payload,
+        artist: payload,
         isLoading: false,
       }
     case ARTIST_ERROR:

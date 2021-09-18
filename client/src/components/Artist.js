@@ -27,7 +27,7 @@ class Artist extends Component {
 
   render() {
     const { id } = this.props.match.params;
-    const { images, name, profile, members, urls, isLoading } = this.props.artist;
+    const { artist, isLoading } = this.props.artist;
 
     if (isLoading) {
       return (<Spinner size="lg" className="spinner" />)
@@ -36,48 +36,50 @@ class Artist extends Component {
     return (
       <Fragment>
         <Container>
-          <main>
-            <div className="row">
-              <div className="col-md-6 m-auto">
-                <div className="profile">
-                  <img src={images[0].uri} alt="" className="artist-img" />
-                  <h2 className="text-center mt-4">{name}</h2>
-                </div>
-              </div>
-            </div>
-            <article>
-              <p className="text-center">{profile}</p>
-              <div className="links text-center">
-                <h4><a href={urls[0]} target="_blank">Official Website</a></h4>
-                <div className="d-flex justify-content-center mt-4">
-                  {formatUrls(urls)}
-                </div>
-              </div>
-              { members.length > 1 ? (
-                <Fragment>
-                  <div className="members-list">
-                    <h4>Members</h4>
-                    <ul className="list-inline">
-                      { members.map(m => m.active ? (
-                        <li className="list-inline-item">{m.name}</li>
-                      ) : null) }
-                    </ul>
+          { artist ? (
+            <main>
+              <div className="row">
+                <div className="col-md-6 m-auto">
+                  <div className="profile">
+                    <img src={artist.images[0].uri} alt="" className="artist-img" />
+                    <h2 className="text-center mt-4">{artist.name}</h2>
                   </div>
-                  { members.find(m => m.active === false) ? (
+                </div>
+              </div>
+              <article>
+                <p className="text-center">{artist.profile}</p>
+                <div className="links text-center">
+                  <h4><a href={artist.urls[0]} target="_blank">Official Website</a></h4>
+                  <div className="d-flex justify-content-center mt-4">
+                    {formatUrls(artist.urls)}
+                  </div>
+                </div>
+                { artist.members.length > 1 ? (
+                  <Fragment>
                     <div className="members-list">
-                      <h4>Previous Members</h4>
+                      <h4>Members</h4>
                       <ul className="list-inline">
-                        { members.map(m => !m.active ? (
+                        { artist.members.map(m => m.active ? (
                           <li className="list-inline-item">{m.name}</li>
                         ) : null) }
                       </ul>
                     </div>
-                  ) : null }
-                </Fragment>
-              ) : null }
-            </article>
-            <Releases id={id} />
-          </main>
+                    { artist.members.find(m => m.active === false) ? (
+                      <div className="members-list">
+                        <h4>Previous Members</h4>
+                        <ul className="list-inline">
+                          { artist.members.map(m => !m.active ? (
+                            <li className="list-inline-item">{m.name}</li>
+                          ) : null) }
+                        </ul>
+                      </div>
+                    ) : null }
+                  </Fragment>
+                ) : null }
+              </article>
+              <Releases id={id} />
+            </main>
+          ) : null }
         </Container>
       </Fragment>
     );
